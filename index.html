@@ -1,175 +1,511 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Iceland&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Sabrina</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sabrina Oliveira — Desenvolvedora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0e0c13;
+    --bg-alt: #17141f;
+    --bg-raised: #1d1926;
+    --text: #ece7db;
+    --text-dim: #948d9f;
+    --wine: #8b2635;
+    --wine-bright: #b23347;
+    --gold: #c9a35c;
+    --line: rgba(236,231,219,0.14);
+    --serif: 'Cormorant Garamond', serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.6;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(236,231,219,0.05) 1px, transparent 0);
+    background-size: 28px 28px;
+  }
+
+  a{ color: inherit; text-decoration: none; }
+
+  ::selection{ background: var(--wine); color: var(--text); }
+
+  :focus-visible{
+    outline: 1px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* NAV */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(14,12,19,0.85);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .brand{
+    font-family: var(--mono);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+  }
+  .navlinks{
+    display:flex;
+    gap: 28px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .navlinks a{ transition: color .2s ease; position: relative; }
+  .navlinks a:hover{ color: var(--text); }
+
+  /* HERO */
+  .hero{
+    padding: 120px 0 96px;
+    position: relative;
+  }
+  .hero .kicker{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--wine-bright);
+    margin-bottom: 18px;
+    letter-spacing: 0.02em;
+  }
+  .hero h1{
+    font-size: clamp(48px, 8vw, 84px);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.01em;
+    min-height: 1.1em;
+  }
+  .hero h1 .cipher{
+    display:inline-block;
+  }
+  .hero .role{
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-top: 22px;
+  }
+  .hero p.lede{
+    max-width: 560px;
+    margin-top: 28px;
+    font-size: 21px;
+    color: var(--text);
+    font-style: italic;
+  }
+  .hero p.lede + p{
+    max-width: 560px;
+    margin-top: 16px;
+    color: var(--text-dim);
+    font-size: 17px;
+  }
+
+  /* SECTION GENERIC */
+  section{ padding: 88px 0; border-top: 1px solid var(--line); }
+  .section-head{
+    display:flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+  .section-head .tag{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--gold);
+  }
+  .section-head h2{
+    font-size: 34px;
+    font-weight: 500;
+  }
+
+  /* SKILLS */
+  .skill-groups{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 48px;
+  }
+  .skill-group h3{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .skill-pills{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pill{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text);
+    background: var(--bg-alt);
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .pill:hover{ border-color: var(--wine-bright); transform: translateY(-1px); }
+  .pill img{ width: 15px; height: 15px; object-fit: contain; filter: grayscale(20%); }
+
+  /* PROJECTS */
+  .case{
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+  }
+  .case:first-of-type{ border-top: none; padding-top: 0; }
+  .case-thumb{
+    position: relative;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-alt);
+  }
+  .case-thumb img{
+    width:100%; height:100%; object-fit: cover;
+    filter: grayscale(55%) contrast(1.05);
+    transition: filter .4s ease, transform .4s ease;
+  }
+  .case-thumb:hover img{ filter: grayscale(0%); transform: scale(1.04); }
+  .case-file{
+    position:absolute; top:8px; left:8px;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    background: rgba(14,12,19,0.75);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+  }
+  .case-body h3{
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .case-body h3 a{ border-bottom: 1px solid transparent; transition: border-color .2s ease; }
+  .case-body h3 a:hover{ border-bottom-color: var(--wine-bright); }
+  .case-stack{
+    display:flex; gap:8px; margin-bottom: 12px;
+  }
+  .case-stack img{ width:16px; height:16px; opacity:.75; }
+  .case-body p{ color: var(--text-dim); font-size: 16px; max-width: 60ch; }
+  .case-body p a{ color: var(--gold); }
+
+  /* CONTACT */
+  .contact-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 40px;
+  }
+  .contact-item{
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-item .label{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .contact-item .value{
+    font-size: 19px;
+  }
+  .contact-item .value a:hover{ color: var(--gold); }
+
+  footer{
+    padding: 32px 0 48px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    border-top: 1px solid var(--line);
+  }
+
+  @media (max-width: 720px){
+    .skill-groups{ grid-template-columns: 1fr; }
+    .case{ grid-template-columns: 1fr; }
+    .contact-grid{ grid-template-columns: 1fr; }
+    .navlinks{ gap: 16px; font-size: 12px; }
+    .hero{ padding: 90px 0 64px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul class="flex">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projetos</a></li>
-                <li><a href="#contact">Contato</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div id="home">
-        <h1>Olá! Prazer, eu sou a Sabrina.</h1>
-        <p>Bem-vindo(a) ao meu portfólio! Aqui você encontra meus projetos, minhas habilidades e um pouco do meu universo como desenvolvedora.</p>
-        <p>Sou apaixonada por automação, scrapers, bots, desenvolvimento de sistemas web e tudo que envolve transformar problemas em soluções inteligentes e eficientes.</p>
-    </div>
-    <div id="skills">
-        <h2>Minhas Skills</h2>
-        <h3>Frontend</h3>
-        <ul class="lg-fe flex ul-skills">
-            <li>
-                <img src="icons/html.png" alt="html">
-                <p>HTML</p>
-            </li>
-            <li>
-                <img src="icons/css-3.png" alt="css">
-                <p>CSS</p>
-            </li>
-            <li>
-                <img src="icons/js.png " alt="javascript">
-                <p>Javascript</p>
-            </li>
-        </ul>
-        <h3>Framework</h3>
-        <ul class="lg-fw flex ul-skills">
-            <li>
-                <img src="icons/laravel.jpg" alt="laravel">
-                <p>Laravel</p>
-            </li>
-            <li>
-                <img src="icons/react.png" alt="react">
-                <p>React</p>
-            </li>
-            <li>
-                <img src="icons/vue.png " alt="vue js">
-                <p>Vue Js</p>
-            </li>
-            <li>
-                <img src="icons/wordpress.png " alt="wordpress">
-                <p>Wordpress</p>
-            </li>
-        </ul>
-        <h3>Backend</h3>
-        <ul class="lg-be flex ul-skills">
-            <li>
-                <img src="icons/python.png" alt="python">
-                <p>Python</p>
-            </li>
-            <li>
-                <img src="icons/php.png" alt="php">
-                <p>PHP</p>
-            </li>
-            <li>
-                <img src="icons/node-js.png " alt="node js">
-                <p>Node Js</p>
-            </li>
-        </ul>
-        <h3>Ferramentas</h3>
-        <ul class="lg-tools flex ul-skills">
-            <li>
-                <img src="icons/docker.png" alt="docker">
-                <p>Docker</p>
-            </li>
-            <li>
-                <img src="icons/puppeteer.png" alt="puppeteer">
-                <p>puppeteer</p>
-            </li>
-            <li>
-                <img src="icons/selenium.png " alt="selenium">
-                <p>Selenium</p>
-            </li>
 
-        </ul>
+<header>
+  <nav class="wrap">
+    <div class="brand">S.O. / dev</div>
+    <div class="navlinks">
+      <a href="#home">Home</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projetos</a>
+      <a href="#contact">Contato</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="kicker">// decifrando problemas desde sempre</div>
+    <h1><span class="cipher" id="cipherName">Sabrina Oliveira</span></h1>
+    <div class="role">desenvolvedora full-stack &amp; criadora de enigmas</div>
+    <p class="lede">Todo sistema é, no fundo, um quebra-cabeça esperando a chave certa.</p>
+    <p>Sou apaixonada por automação, bots e scrapers — qualquer coisa que transforme um processo manual e chato em algo elegante e automático. Nas horas vagas, crio enigmas e jogos de lógica pros meus amigos tentarem resolver; no trabalho, aplico essa mesma cabeça de "vou encontrar o padrão escondido" em cada sistema que construo.</p>
+    <p>Atualmente estou estudando cybersegurança por conta própria, tentando entender os sistemas de dentro pra fora. E quando não estou codando nem quebrando a cabeça com puzzles, provavelmente estou customizando meu Arch Linux até deixar do jeitinho que eu quero.</p>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">01</span>
+      <h2>Ferramentas do ofício</h2>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Frontend</h3>
+        <div class="skill-pills">
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/html.png" alt="">HTML</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/css-3.png" alt="">CSS</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/js.png" alt="">JavaScript</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Frameworks</h3>
+        <div class="skill-pills">
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/laravel.jpg" alt="">Laravel</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/react.png" alt="">React</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/vue.png" alt="">Vue.js</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/wordpress.png" alt="">WordPress</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Backend</h3>
+        <div class="skill-pills">
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/python.png" alt="">Python</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/php.png" alt="">PHP</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/node-js.png" alt="">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Automação &amp; ferramentas</h3>
+        <div class="skill-pills">
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/docker.png" alt="">Docker</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/puppeteer.png" alt="">Puppeteer</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/selenium.png" alt="">Selenium</span>
+          <span class="pill"><img src="https://cdn.simpleicons.org/linux/ece7db" alt="">Linux</span>
+        </div>
+      </div>
+      <div class="skill-group">
         <h3>Nuvem</h3>
-        <ul class="cloud flex ul-skills">
-            <li>
-                <img src="icons/gcloud.png" alt="gcloud">
-                <p>Gcloud</p>
-            </li>
-            <li>
-                <img src="icons/aws.png" alt="aws">
-                <p>AWS</p>
-            </li>
-        </ul>
+        <div class="skill-pills">
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/gcloud.png" alt="">Google Cloud</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/aws.png" alt="">AWS</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Em estudo</h3>
+        <div class="skill-pills">
+          <span class="pill">Cybersegurança</span>
+        </div>
+      </div>
+      <div class="skill-group">
         <h3>Arquitetura</h3>
-        <ul class="others flex ul-skills">
-            <li>
-                <img src="icons/mvc.jpg" alt="mvc">
-                <p>MVC</p>
-            </li>
-            <li>
-                <img src="icons/rest.png" alt="rest api">
-                <p>REST Api</p>
-            </li>
-        </ul>
+        <div class="skill-pills">
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/mvc.jpg" alt="">MVC</span>
+          <span class="pill"><img src="https://bina663.github.io/sabrina/icons/rest.png" alt="">REST API</span>
+        </div>
+      </div>
     </div>
-    <div id="projects">
-        <h2>Meus Projetos</h2>
-        <ul class="flex">
-            <li>
-                <p class="name-pj">Enigma</p>
-                <a href="https://enigma.portfoliosabrinaoliver.com/" target="_blank" rel="noopener noreferrer">
-                    <img src="/projects/enigma.png" alt="Enigma">
-                </a>
-                <section class="sec-icons">
-                    <img src="/icons/php.png" alt="">
-                    <img src="/icons/mvc.jpg" alt="">
-                </section>
-                <section class="desc-pj"><p>Enigma é um desafio que criei para testar a lógica e a inteligência dos meus amigos.
-                Um jogo cheio de mistérios, pistas escondidas e quebra-cabeças que só os mais atentos conseguem resolver.
-                Feito para desafiar, provocar e divertir quem gosta de um bom enigma.</p></section>
-            </li>
-            <li>
-                <p class="name-pj">Americ Horror story</p>
-                <a href="https://cool-druid-678791.netlify.app/" target="_blank" rel="noopener noreferrer">
-                    <img src="/projects/ahs.png" alt="American Horror Story">
-                </a>
-                <section class="sec-icons">
-                    <img src="/icons/html.png" alt="">
-                    <img src="/icons/css-3.png" alt="">
-                    <img src="/icons/node-js.png" alt="">
-                    
-                </section>
-                <section class="desc-pj"><p>Desenvolvi do zero uma <a href="https://api-ahs.vercel.app/">API</a> própria que reúne informações dos personagens de American Horror Story: Asylum — incluindo nomes, intérpretes e imagens oficiais. Depois, criei um site que consome essa API e exibe tudo de forma dinâmica, rápida e visualmente imersiva.
-                O projeto combina backend autoral (API criada por mim e hospedada na Vercel) com frontend responsivo, mostrando minha experiência em integração, organização de dados e design temático.</p></section>
-            </li>
-            <li>
-                <p class="name-pj">The Beatles</p>
-                <a href="https://dreamy-jennings-da804b.netlify.app/index.html" target="_blank" rel="noopener noreferrer">
-                    <img src="/projects/beatles.png" alt="The Beatles">
-                </a>
-                <section class="sec-icons">
-                    <img src="/icons/html.png" alt="">
-                    <img src="/icons/css-3.png" alt="">
-                    
-                </section>
-                <section class="desc-pj"><p>Desenvolvi um site simples usando apenas HTML e CSS, exibindo a história dos Beatles de forma clara e organizada.</p></section>
-            </li>
-        </ul>       
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">02</span>
+      <h2>Casos resolvidos</h2>
     </div>
-    <div id="contact">
-        <h2>Contato</h2>
-        <ul>
-            <li>Email: bina.oliver4@Gmail.com</li>
-            <li>LinkedIn: linkedin.com/in/sabrina-oliver/</li>
-            <li>GitHub: github.com/sabrinaoliver</li>
-            <li>Whatsap: (12)966434704</li>
-        </ul>
+
+    <article class="case">
+      <div class="case-thumb">
+        <span class="case-file">caso nº 01</span>
+        <img src="https://bina663.github.io/projects/enigma.png" alt="Enigma">
+      </div>
+      <div class="case-body">
+        <h3><a href="https://enigma.portfoliosabrinaoliver.com/" target="_blank" rel="noopener">Enigma</a></h3>
+        <div class="case-stack">
+            <p>PHP e MVC</p>
+        </div>
+        <p>Um desafio de lógica que criei do zero pra testar meus amigos: pistas escondidas, quebra-cabeças e um fio narrativo que só quem presta atenção consegue seguir até o fim. Foi meu playground pra misturar backend em PHP/MVC com design de puzzle — a parte mais difícil não foi o código, foi calibrar o nível de dificuldade pra ser desafiador sem ser injusto.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-thumb">
+        <span class="case-file">caso nº 02</span>
+        <img src="https://bina663.github.io/projects/ahs.png" alt="American Horror Story">
+      </div>
+      <div class="case-body">
+        <h3>American Horror Story</h3>
+        <div class="case-stack">
+            <p>API REST e React</p>
+        </div>
+        <p>Construí uma <a href="https://api-ahs.vercel.app/" target="_blank" rel="noopener">API própria</a> reunindo os personagens de American Horror Story: Asylum — nomes, intérpretes, imagens oficiais — e depois um <a href="https://cool-druid-678791.netlify.app/" target="_blank" rel="noopener">site</a> que consome tudo isso de forma dinâmica e temática. Do dado bruto até a tela final, o projeto inteiro é meu, da API hospedada na Vercel ao frontend.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-thumb">
+        <span class="case-file">caso nº 03</span>
+        <div style="display:flex; align-items:center; justify-content:center; height:100%; background:var(--bg-alt);">
+          <img src="projects/badge-em-desenvolvimento.svg" alt="Em desenvolvimento" style="width:100%; height:100%; object-fit: contain; opacity:0.9;">
+        </div>
+      </div>
+      <div class="case-body">
+        <h3><a href="#">Sistema de Delivery</a></h3>
+        <span class="pill" style="margin-bottom:14px; display:inline-flex; color:var(--gold); border-color:var(--gold);">em desenvolvimento</span>
+        <div class="case-stack">
+          <p>Laravel, PHP, MySQL, Bootstrap e Blade</p>
+        </div>
+        <p>Sistema completo de delivery em que o cliente monta o pedido e paga direto pelo Pix ou cartão de crédito, via integração com a API do Mercado Pago. Do outro lado, o administrador da lanchonete gerencia o estoque de produtos e acompanha os pedidos recebidos em tempo real.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-thumb">
+        <span class="case-file">caso nº 04</span>
+        <div style="display:flex; align-items:center; justify-content:center; height:100%; background:var(--bg-alt);">
+          <img src="projects/badge-em-desenvolvimento.svg" alt="Em desenvolvimento" style="width:100%; height:100%; object-fit: contain; opacity:0.9;">
+        </div>
+      </div>
+      <div class="case-body">
+        <h3><a href="#">SaaS de automação</a></h3>
+        <span class="pill" style="margin-bottom:14px; display:inline-flex; color:var(--gold); border-color:var(--gold);">em desenvolvimento</span>
+        <div class="case-stack" style="margin-top:12px;">
+            <p>Laravel, PHP, MySQL, Bootstrap e Blade</p>
+        </div>
+        <p>Um SaaS que vai reunir, num único painel de controle, todos os bots que já desenvolvi ao longo do tempo pra automatizar processos — cada um configurável e monitorável num só lugar, em vez de espalhado em scripts soltos. O objetivo é trazer mais eficiência e controle sobre os processos automatizados, deixando os bots que já desenvolvi e os que ainda estou desenvolvendo muito mais apresentáveis.</p>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-thumb">
+        <span class="case-file">caso nº 05</span>
+        <div style="display:flex; align-items:center; justify-content:center; height:100%; background:var(--bg-alt);">
+          <img src="projects/badge-em-desenvolvimento.svg" alt="Em desenvolvimento" style="width:100%; height:100%; object-fit: contain; opacity:0.9;">
+        </div>
+      </div>
+      <div class="case-body">
+        <h3><a href="#">Gerenciador de compras</a></h3>
+        <span class="pill" style="margin-bottom:14px; display:inline-flex; color:var(--gold); border-color:var(--gold);">em planejamento</span>
+        <div class="case-stack" style="margin-top:12px;">
+          <span style="font-family:var(--mono); font-size:12px; color:var(--text-dim);">stack a definir</span>
+        </div>
+        <p>Ainda na fase de planejamento, mas é o projeto mais ambicioso até agora: um aplicativo que, além de te ajudar a gerenciar sua lista de compras, também tem como objetivo te ajudar a economizar. <a href="https://www.tiktok.com/@bina.py/video/7676920033288736007" target="_blank" rel="noopener">Dá pra ver mais detalhes nesse vídeo</a>.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">03</span>
+      <h2>Decifre o próximo passo</h2>
     </div>
-    <footer>
-        <p>&copy; 2024 Sabrina. Todos os direitos reservados.</p>
-    </footer>
+    <div class="contact-grid">
+      <div class="contact-item">
+        <div class="label">email</div>
+        <div class="value"><a href="mailto:bina.oliver4@gmail.com">bina.oliver4@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">whatsapp</div>
+        <div class="value"><a href="https://wa.me/5512966434704" target="_blank" rel="noopener">(12) 96643-4704</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">linkedin</div>
+        <div class="value"><a href="https://linkedin.com/in/sabrina-oliver/" target="_blank" rel="noopener">/in/sabrina-oliver</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="label">github</div>
+        <div class="value"><a href="https://github.com/sabrinaoliver" target="_blank" rel="noopener">/sabrinaoliver</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">© 2024–2026 Sabrina Oliveira. Todos os direitos reservados.</div>
+</footer>
+
+<script>
+(function(){
+  var el = document.getElementById('cipherName');
+  var finalText = el.textContent;
+  var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+-';
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduceMotion){ return; }
+
+  var frame = 0;
+  var totalFrames = 22;
+  var revealStep = finalText.length / totalFrames;
+
+  function render(){
+    var revealedCount = Math.floor(frame * revealStep);
+    var out = '';
+    for(var i=0; i<finalText.length; i++){
+      var c = finalText[i];
+      if(c === ' '){ out += ' '; continue; }
+      if(i < revealedCount){ out += c; }
+      else{ out += chars[Math.floor(Math.random()*chars.length)]; }
+    }
+    el.textContent = out;
+    frame++;
+    if(frame <= totalFrames){
+      requestAnimationFrame(function(){ setTimeout(render, 28); });
+    } else {
+      el.textContent = finalText;
+    }
+  }
+  el.textContent = finalText.replace(/[^\s]/g, chars[0]);
+  requestAnimationFrame(function(){ setTimeout(render, 120); });
+})();
+</script>
+
 </body>
 </html>
